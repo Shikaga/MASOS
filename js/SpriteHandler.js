@@ -20,10 +20,10 @@ SpriteHandler.prototype.createMoneySprite = function(x, y, size)
     return circle;
 }
 
-SpriteHandler.prototype.createCircleSprite = function(x, y, size)
+SpriteHandler.prototype.createCircleSprite = function(x, y, size, color)
 {
     var circle = paper.circle(x, y, size);    
-    circle.attr("fill", "#fff");
+    circle.attr("fill", color || "#fff");
     return circle;
 }
 
