@@ -1,7 +1,10 @@
-var Agent = function(spriteHandler) {
+var Agent = function(spriteHandler, x, y, radius) {
+	this.x = x;
+	this.y = y;
+	this.radius = radius;
 	this.spriteHandler = spriteHandler;
 };
 
 Agent.prototype.draw = function() {
-	this.spriteHandler.createCircleSprite(10,10,10);
+	this.spriteHandler.createCircleSprite(this.x, this.y, this.radius);
 };
