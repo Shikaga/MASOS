@@ -38,3 +38,10 @@ SpriteHandler.prototype.animateSprite = function(sprite, x, y, timeToAnimate)
 var paper = Raphael(0, 0, "100%", "100%");
 var svg = document.getElementsByTagName("svg")[0];
 svg.setAttribute("pointer-events", "none");
+
+var AgentHandler = function() {
+	var sh = new SpriteHandler();
+	var circle = sh.createCircleSprite(100,100,100);
+	x = circle;
+}
+

@@ -1,7 +1,7 @@
-/**
- * Created with JetBrains WebStorm.
- * User: Shikaga7
- * Date: 31/12/12
- * Time: 11:18
- * To change this template use File | Settings | File Templates.
- */
+var Agent = function(spriteHandler) {
+	this.spriteHandler = spriteHandler;
+};
+
+Agent.prototype.draw = function() {
+	this.spriteHandler.createCircleSprite(10,10,10);
+};
