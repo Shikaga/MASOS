@@ -6,11 +6,15 @@ var Agent = function(spriteHandler, x, y, radius) {
 };
 
 Agent.prototype.draw = function() {
-	this.spriteHandler.createCircleSprite(this.x, this.y, this.radius, this.color);
+	this.sprite = this.spriteHandler.createCircleSprite(this.x, this.y, this.radius, this.color);
 };
 
 Agent.prototype.receiveBlock = function(doBlock) {
     doBlock.invoke(this);
+    if (this.sprite) {
+        this.sprite.remove();        
+    }
+    this.draw();
 };
 
 Agent.prototype.setColor = function(color) {

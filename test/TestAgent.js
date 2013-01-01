@@ -1,6 +1,8 @@
 module("AgentTests", {
 	setup: function() {
-		this.mySpriteHandler = { createCircleSprite: function() {} };
+        var self = this;
+        this.myRaphaelSprite  = {remove: function() {}};
+		this.mySpriteHandler = { createCircleSprite: function() {return self.myRaphaelSprite} };
         this.myDoBlock = { invoke: function() {}};
 	}, teardown: function() {
 
@@ -50,3 +52,19 @@ test("agent invokes DoBlocks",
         mockDoBlock.verify();
     });
 
+    
+test("agent redraws itself after a doBlock", function() {
+    var mockSpriteHandler = this.mock(this.mySpriteHandler);
+    var mockRaphaelSprite = this.mock(this.myRaphaelSprite);
+    var agent = new Agent(this.mySpriteHandler, 10,10,10);    
+    
+    
+    mockRaphaelSprite.expects("remove").once();
+    //mockSpriteHandler.expects("createCircleSprite").once();
+
+    agent.draw();
+    agent.receiveBlock(this.myDoBlock);
+    
+    mockSpriteHandler.verify();
+    mockRaphaelSprite.verify();
+});
