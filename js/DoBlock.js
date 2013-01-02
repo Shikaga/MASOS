@@ -6,5 +6,5 @@ DoBlock.prototype.changeColor = function(color) {
 };
 
 DoBlock.prototype.invoke = function(agent) {
-	agent.setColor(this.color);
+	agent.state.color = this.color;
 };

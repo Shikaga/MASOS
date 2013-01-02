@@ -34,7 +34,7 @@ test("agent can draw itself with a color", function() {
 	mockSpriteHandler.expects("createCircleSprite").once().withArgs(10,10,10, "red");
 	
 	var agent = new Agent(this.mySpriteHandler, 10,10,10);
-	agent.setColor("red");
+	agent.state.color ="red";
 	agent.draw();
 	
 	mockSpriteHandler.verify();

@@ -3,10 +3,11 @@ var Agent = function(spriteHandler, x, y, radius) {
 	this.y = y;
 	this.radius = radius;
 	this.spriteHandler = spriteHandler;
+	this.state = new State(this);
 };
 
 Agent.prototype.draw = function() {
-	this.sprite = this.spriteHandler.createCircleSprite(this.x, this.y, this.radius, this.color);
+	this.sprite = this.spriteHandler.createCircleSprite(this.x, this.y, this.radius, this.state.color);
 };
 
 Agent.prototype.receiveBlock = function(doBlock) {
@@ -15,8 +16,4 @@ Agent.prototype.receiveBlock = function(doBlock) {
 		this.sprite.remove();
 	}
 	this.draw();
-};
-
-Agent.prototype.setColor = function(color) {
-	this.color = color;
 };

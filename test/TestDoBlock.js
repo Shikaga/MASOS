@@ -13,9 +13,8 @@ test("DoBlock can change agents color",
 	function() {
 		var db = new DoBlock();
 		db.changeColor("red");
-		var mockAgent = this.mock(this.myAgent);
-		mockAgent.expects("setColor").once().withArgs("red");
-		db.invoke(this.myAgent);
-		mockAgent.verify();
+		var agent = new Agent(this.mySpriteHandler, 10,10,10);
+		db.invoke(agent);
+		equal("red", agent.state.color);
 	});
 
