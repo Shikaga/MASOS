@@ -15,3 +15,14 @@ AgentHandler.prototype.draw = function() {
 	}
 }
 
+AgentHandler.prototype.setDoBlock = function(doBlock) {
+	this.doBlock = doBlock;
+}
+
+AgentHandler.prototype.step = function() {
+	if (this.doBlock != null) {
+		for (var i=0; i < this.agents.length; i++) {
+			this.agents[i].receiveBlock(this.doBlock);
+		}
+	}
+}

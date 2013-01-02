@@ -1,12 +1,11 @@
 module("AgentHandlerTests", {
 	setup: function() {
 		this.mySpriteHandler = { createCircleSprite: function() {} };
-	}, teardown: function() {
+        this.myDoBlock = { invoke: function() {}};
+    }, teardown: function() {
 
 	}
 });
-
-
 
 test("AgentHandler can create a single agent",
 	function() {
@@ -75,3 +74,42 @@ test("AgentHandler can draw four sprites", function() {
 	mockSpriteHandler.verify();
 });
 
+test("AgentHandler can apply a DoBlock to all sprites", function() {
+	var mockSpriteHandler = this.mock(this.mySpriteHandler);
+	var mockDoBlock = this.mock(this.myDoBlock);
+
+	mockDoBlock.expects("invoke").exactly(4);
+
+	var ah = new AgentHandler(this.mySpriteHandler, 40, 40, 10);
+	ah.setDoBlock(this.myDoBlock);
+	ah.step();
+
+	mockDoBlock.verify();
+});
+
+test("AgentHandler does nothing if DoBlock not set when step invoked", function() {
+	var mockSpriteHandler = this.mock(this.mySpriteHandler);
+	var mockDoBlock = this.mock(this.myDoBlock);
+
+	mockDoBlock.expects("invoke").exactly(0);
+
+	var ah = new AgentHandler(this.mySpriteHandler, 40, 40, 10);
+	ah.step();
+
+	mockDoBlock.verify();
+});
+
+test("AgentHandler can applies the doBlock to each sprite every time step is invoked", function() {
+	var mockSpriteHandler = this.mock(this.mySpriteHandler);
+	var mockDoBlock = this.mock(this.myDoBlock);
+
+
+	var ah = new AgentHandler(this.mySpriteHandler, 40, 40, 10);
+	ah.setDoBlock(this.myDoBlock);
+	ah.step();
+
+
+	mockDoBlock.expects("invoke").exactly(4);
+	ah.step();
+	mockDoBlock.verify();
+});

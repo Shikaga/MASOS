@@ -18,6 +18,10 @@
 	var sh = new SpriteHandler();
 	var a = new AgentHandler(sh, 200,200,10);
 	a.draw();
+	var db = new DoBlock();
+	db.changeColor("red");
+	a.setDoBlock(db);
 </script>
+<button style="margin-top:200px" onclick="a.step()">Step</button>
 		
 </html>
