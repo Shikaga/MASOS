@@ -10,13 +10,13 @@ Agent.prototype.draw = function() {
 };
 
 Agent.prototype.receiveBlock = function(doBlock) {
-    doBlock.invoke(this);
-    if (this.sprite) {
-        this.sprite.remove();        
-    }
-    this.draw();
+	doBlock.invoke(this);
+	if (this.sprite) {
+		this.sprite.remove();
+	}
+	this.draw();
 };
 
 Agent.prototype.setColor = function(color) {
-    this.color = color;
+	this.color = color;
 };

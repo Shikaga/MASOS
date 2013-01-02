@@ -1,7 +1,7 @@
 module("DoBlock Tests", {
 	setup: function() {
-    	this.mySpriteHandler = { createCircleSprite: function() {} };
-        this.myAgent = { setColor: function() {}};
+		this.mySpriteHandler = { createCircleSprite: function() {} };
+		this.myAgent = { setColor: function() {}};
 	}, teardown: function() {
 
 	}
@@ -11,11 +11,11 @@ module("DoBlock Tests", {
 
 test("DoBlock can change agents color",
 	function() {
-        var db = new DoBlock();
-        db.changeColor("red");
-    	var mockAgent = this.mock(this.myAgent);
-    	mockAgent.expects("setColor").once().withArgs("red");
-        db.invoke(this.myAgent);
-        mockAgent.verify();
+		var db = new DoBlock();
+		db.changeColor("red");
+		var mockAgent = this.mock(this.myAgent);
+		mockAgent.expects("setColor").once().withArgs("red");
+		db.invoke(this.myAgent);
+		mockAgent.verify();
 	});
 
