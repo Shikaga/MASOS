@@ -13,14 +13,30 @@
 	<script type="text/javascript" src="js/SpriteHandler.js"></script>
 	<script type="text/javascript" src="js/Agent.js"></script>
     <script type="text/javascript" src="js/AgentHandler.js"></script>
-    <script type="text/javascript" src="js/DoBlock.js"></script>
+	<script type="text/javascript" src="js/DoBlock.js"></script>
+	<script type="text/javascript" src="js/IfBlock.js"></script>
+	<script type="text/javascript" src="js/State.js"></script>
 <script>
 	var sh = new SpriteHandler();
 	var a = new AgentHandler(sh, 200,200,10);
 	a.draw();
-	var db = new DoBlock();
-	db.changeColor("red");
-	a.setDoBlock(db);
+
+	var dbRed = new DoBlock();
+	dbRed.changeColor("red");
+	var dbBlue = new DoBlock();
+	dbBlue.changeColor("blue");
+	var dbWhite = new DoBlock();
+	dbWhite.changeColor("white");
+
+	var ibWhite = new IfBlock();
+	var ibRed = new IfBlock();
+	var ibBlue = new IfBlock();
+
+	ibWhite.ifColor("white", dbRed, ibRed);
+	ibRed.ifColor("red", dbBlue, ibBlue);
+	ibBlue.ifColor("blue", dbWhite, ibWhite);
+
+	a.setDoBlock(ibWhite);
 </script>
 <button style="margin-top:200px" onclick="a.step()">Step</button>
 		

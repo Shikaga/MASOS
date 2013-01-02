@@ -5,6 +5,14 @@ DoBlock.prototype.changeColor = function(color) {
 	this.color = color;
 };
 
+DoBlock.prototype.if = function(ifBlock) {
+	this.ifBlock = ifBlock;
+};
+
 DoBlock.prototype.invoke = function(agent) {
-	agent.state.color = this.color;
+	if (this.ifBlock != null) {
+		this.ifBlock.invoke(agent);
+	} else if (this.color != null) {
+		agent.state.color = this.color;
+	}
 };

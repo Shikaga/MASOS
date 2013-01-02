@@ -1,14 +1,16 @@
 var IfBlock = function() {
 };
 
-IfBlock.prototype.invoke = function(agent, doBlockIf, doBlockElse) {
+IfBlock.prototype.invoke = function(agent) {
 	if (agent.state.color == this.color) {
-		agent.receiveBlock(doBlockIf);
+		agent.receiveBlock(this.doBlockIf);
 	} else {
-		agent.receiveBlock(doBlockElse);
+		agent.receiveBlock(this.doBlockElse);
 	}
 };
 
-IfBlock.prototype.ifColor = function(color) {
+IfBlock.prototype.ifColor = function(color, doBlockIf, doBlockElse) {
 	this.color = color;
+	this.doBlockIf = doBlockIf;
+	this.doBlockElse = doBlockElse;
 }
