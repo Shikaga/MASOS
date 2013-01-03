@@ -113,3 +113,24 @@ test("AgentHandler can applies the doBlock to each sprite every time step is inv
 	ah.step();
 	mockDoBlock.verify();
 });
+
+test("AgentHandler can find no adjacent agents", function() {
+	var ah = new AgentHandler(this.mySpriteHandler,10,10,5);
+	var agents = ah.getAdjacentAgents(ah.agents[0]);
+	equal(0,agents.length);
+});
+
+test("AgentHandler can find one adjacent agent", function() {
+	var ah = new AgentHandler(this.mySpriteHandler,20,10,5);
+	var agents = ah.getAdjacentAgents(ah.agents[0]);
+	equal(1,agents.length);
+	equal(15, agents[0].x);
+	equal(5, agents[0].y);
+});
+
+
+test("AgentHandler can find two adjacent agents and ignores diagonal agent", function() {
+	var ah = new AgentHandler(this.mySpriteHandler,20,20,5);
+	var agents = ah.getAdjacentAgents(ah.agents[0]);
+	equal(2,agents.length);
+});

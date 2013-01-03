@@ -26,3 +26,21 @@ AgentHandler.prototype.step = function() {
 		}
 	}
 }
+
+AgentHandler.prototype.getAdjacentAgents = function(agent) {
+	var adjacentAgents = [];
+	for (var i=0; i < this.agents.length; i++) {
+		if (this.agents[i] != agent) {
+			var xDiff = this.agents[i].x - agent.x;
+			var yDiff = this.agents[i].y - agent.y;
+			var xDiffSquare = xDiff * xDiff;
+			var yDiffSquare = yDiff * yDiff;
+			var radiusCombined = this.agents[i].radius + agent.radius;
+			var radiusCombinedSquare = radiusCombined * radiusCombined;
+			if (xDiffSquare + yDiffSquare <= radiusCombinedSquare) {
+				adjacentAgents.push(this.agents[i]);
+			}
+		}
+	}
+	return adjacentAgents;
+}
