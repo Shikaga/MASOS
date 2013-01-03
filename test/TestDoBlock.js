@@ -26,7 +26,6 @@ test("DoBlock can invoke an IfBlock",
 		db.if(ib);
 
 		var agent = new Agent(this.mySpriteHandler, 10,10,10);
-
 		db.invoke(agent);
 		equal("red", agent.state.color);
 });

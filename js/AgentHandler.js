@@ -16,14 +16,16 @@ AgentHandler.prototype.draw = function() {
 }
 
 AgentHandler.prototype.setDoBlock = function(doBlock) {
-	this.doBlock = doBlock;
+	if (doBlock != null) {
+		for (var i=0; i < this.agents.length; i++) {
+			this.agents[i].receiveBlock(doBlock);
+		}
+	}
 }
 
 AgentHandler.prototype.step = function() {
-	if (this.doBlock != null) {
-		for (var i=0; i < this.agents.length; i++) {
-			this.agents[i].receiveBlock(this.doBlock);
-		}
+	for (var i=0; i < this.agents.length; i++) {
+		this.agents[i].step();
 	}
 }
 
@@ -43,4 +45,11 @@ AgentHandler.prototype.getAdjacentAgents = function(agent) {
 		}
 	}
 	return adjacentAgents;
+}
+
+AgentHandler.prototype.broadcast = function(agent, doBlock) {
+	var agents = this.getAdjacentAgents(agent);
+	for (var i=0; i < agents.length; i++) {
+		agents[i].receiveBlock(doBlock);
+	}
 }

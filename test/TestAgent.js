@@ -40,15 +40,26 @@ test("agent can draw itself with a color", function() {
 	mockSpriteHandler.verify();
 	
 });
-	
-test("agent invokes DoBlocks", 
+
+test("agent doesn't invoke doBlock before step",
 	function() {
 		var mockSpriteHandler = this.mock(this.mySpriteHandler);
-		var agent = new Agent(this.mySpriteHandler, 10,10,10);	
-		
+		var agent = new Agent(this.mySpriteHandler, 10,10,10);
+
+		var mockDoBlock = this.mock(this.myDoBlock);
+		agent.receiveBlock(this.myDoBlock);
+		mockDoBlock.verify();
+	});
+
+test("agent invokes DoBlocks on step",
+	function() {
+		var mockSpriteHandler = this.mock(this.mySpriteHandler);
+		var agent = new Agent(this.mySpriteHandler, 10,10,10);
+
 		var mockDoBlock = this.mock(this.myDoBlock);
 		mockDoBlock.expects("invoke").once().withArgs(agent);
 		agent.receiveBlock(this.myDoBlock);
+		agent.step();
 		mockDoBlock.verify();
 	});
 
@@ -64,6 +75,7 @@ test("agent redraws itself after a doBlock", function() {
 
 	agent.draw();
 	agent.receiveBlock(this.myDoBlock);
+	agent.step();
 	
 	mockSpriteHandler.verify();
 	mockRaphaelSprite.verify();

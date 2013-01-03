@@ -3,9 +3,9 @@ var IfBlock = function() {
 
 IfBlock.prototype.invoke = function(agent) {
 	if (agent.state.color == this.color) {
-		agent.receiveBlock(this.doBlockIf);
+		this.doBlockIf.invoke(agent);
 	} else {
-		agent.receiveBlock(this.doBlockElse);
+		this.doBlockElse.invoke(agent);
 	}
 };
 

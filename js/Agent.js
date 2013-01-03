@@ -11,9 +11,15 @@ Agent.prototype.draw = function() {
 };
 
 Agent.prototype.receiveBlock = function(doBlock) {
-	doBlock.invoke(this);
-	if (this.sprite) {
-		this.sprite.remove();
+	this.doBlock = doBlock
+};
+
+Agent.prototype.step = function() {
+	if (this.doBlock != null) {
+		this.doBlock.invoke(this);
+		if (this.sprite) {
+			this.sprite.remove();
+		}
+		this.draw();
 	}
-	this.draw();
 };

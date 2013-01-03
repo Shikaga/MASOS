@@ -134,3 +134,16 @@ test("AgentHandler can find two adjacent agents and ignores diagonal agent", fun
 	var agents = ah.getAdjacentAgents(ah.agents[0]);
 	equal(2,agents.length);
 });
+
+test("AgentHandler can broadcast to adjacent agents", function() {
+	var ah = new AgentHandler(this.mySpriteHandler,20,20,5);
+	var db = new DoBlock();
+	db.changeColor("red");
+	ah.broadcast(ah.agents[0], db);
+	ah.step();
+
+	equal("white", ah.agents[0].state.color);
+	equal("red", ah.agents[1].state.color);
+	equal("red", ah.agents[2].state.color);
+	equal("white", ah.agents[3].state.color);
+});
