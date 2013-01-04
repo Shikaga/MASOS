@@ -35,30 +35,29 @@
 	var dbGreen = new DoBlock();
 	dbGreen.changeColor("green");
 	var dbNothing = new DoBlock();
-	dbBroadcast = new DoBlock();
-	dbBroadcast2 = new DoBlock();
-	var ifBlue = new IfBlock();
-	ifBlue.ifColor("blue", dbBlue, dbGreen);
 
-	dbBroadcast.setBroadcast(ifBlue);
+	//If green broadcast (turn white to green) and (turn blue to red)
+	//If red broadcast turn red
 
+	var ifWhiteTurnToGreenOrIfBlueToRed = new IfBlock();
+	var ifBlueTurnToRed = new IfBlock();
 
+	ifWhiteTurnToGreenOrIfBlueToRed.ifColor("white", dbGreen, ifBlueTurnToRed);
+	ifBlueTurnToRed.ifColor("blue", dbRed, dbNothing);
 
-	dbBroadcast2.setBroadcast(dbRed);
+	var ifGreenBroadcastChangeToGreenElseCheckIfRed = new IfBlock();
+	var ifRedBroadcastChangeToRed = new IfBlock();
 
-	var ibGreen = new IfBlock();
-	var andBlock = new AndBlock();
-	andBlock.and(dbBroadcast, dbGreen);
+	var broadcastChangeWhiteToGreenOrBlueToRed = new DoBlock();
+	broadcastChangeWhiteToGreenOrBlueToRed.setBroadcast(ifWhiteTurnToGreenOrIfBlueToRed);
 
-	ibGreen.ifColor("green", andBlock, dbNothing);
+	var broadcastChangeToRed = new DoBlock();
+	broadcastChangeToRed.setBroadcast(dbRed);
 
-	var ibRed = new IfBlock();
-	var andBlock2 = new AndBlock();
-	andBlock2.and(dbBroadcast2, dbRed);
+	ifGreenBroadcastChangeToGreenElseCheckIfRed.ifColor("green", broadcastChangeWhiteToGreenOrBlueToRed, ifRedBroadcastChangeToRed);
+	ifRedBroadcastChangeToRed.ifColor("red", broadcastChangeToRed, dbNothing);
 
-	ibRed.ifColor("green", andBlock2, dbNothing);
-
-	a.setDoBlock(ibGreen);
+	a.setDoBlock(ifGreenBroadcastChangeToGreenElseCheckIfRed);
 </script>
 <button style="margin-top:200px" onclick="a.step()">Step</button>
 		
