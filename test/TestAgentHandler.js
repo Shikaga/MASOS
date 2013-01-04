@@ -136,11 +136,24 @@ test("AgentHandler can find two adjacent agents and ignores diagonal agent", fun
 	equal(2,agents.length);
 });
 
-test("AgentHandler can broadcast to adjacent agents", function() {
+test("AgentHandler doesn't broadcast until step", function() {
 	var ah = new AgentHandler(this.mySpriteHandler,20,20,5);
 	var db = new DoBlock();
 	db.changeColor("red");
 	ah.broadcast(ah.agents[0], db);
+
+	equal("white", ah.agents[0].state.color);
+	equal("white", ah.agents[1].state.color);
+	equal("white", ah.agents[2].state.color);
+	equal("white", ah.agents[3].state.color);
+});
+
+test("AgentHandler can broadcast to adjacent agents after step", function() {
+	var ah = new AgentHandler(this.mySpriteHandler,20,20,5);
+	var db = new DoBlock();
+	db.changeColor("red");
+	ah.broadcast(ah.agents[0], db);
+	ah.step();
 
 	equal("white", ah.agents[0].state.color);
 	equal("red", ah.agents[1].state.color);
@@ -169,4 +182,32 @@ test("AgentHandler doesn't handle broadcasts until after a step is complete", fu
 	//db.setBroadcast(testDoBlock);
 	ah.setDoBlock(testDoBlock);
 	ah.step();
+	ah.step();
+	equal(8, this.counter);
 });
+
+//test("AgentHandler doesn't handle broadcasts until after a step is complete", function() {
+//	var ah = new AgentHandler(this.mySpriteHandler,20,20,5);
+//
+//	var self = this;
+//	this.counter = 0;
+//
+//	var testDoBlock =  {
+//		invoke : function(agent) {
+//			self.counter += 1;
+//			agent.agentHandler.broadcast(agent, {
+//				invoke: function(agent) {
+//					debugger
+//					agent.agentHandler.broadcast(agent, {
+//						invoke: function() {debugger}
+//					});
+//				}
+//			})
+//		}
+//	}
+//
+//	var db = new DoBlock();
+//	//db.setBroadcast(testDoBlock);
+//	ah.setDoBlock(testDoBlock);
+//	ah.step();
+//});

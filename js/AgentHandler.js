@@ -27,12 +27,12 @@ AgentHandler.prototype.setDoBlock = function(doBlock) {
 }
 
 AgentHandler.prototype.step = function() {
+	this.stepsCompleted();
 	this.stepInProgress = true;
 	for (var i=0; i < this.agents.length; i++) {
 		this.agents[i].step();
 	}
 	this.stepInProgress = false;
-	this.stepsCompleted();
 }
 
 AgentHandler.prototype.getAdjacentAgents = function(agent) {
@@ -55,18 +55,14 @@ AgentHandler.prototype.getAdjacentAgents = function(agent) {
 
 AgentHandler.prototype.broadcast = function(agent, doBlock) {
 	this.queuedBroadcast.push({"agent": agent, "doBlock": doBlock});
-	if (!this.stepInProgress) {
-		this.stepsCompleted();
-	}
 }
 
-AgentHandler.prototype.stepsCompleted = function(agent, doBlock) {
-	if (this.queuedBroadcast != null) {
-		for (var i=0; i < this.queuedBroadcast.length; i++) {
-			var agents = this.getAdjacentAgents(this.queuedBroadcast[i].agent);
-			for (var j=0; j < agents.length; j++) {
-				agents[j].receiveBroadcast(this.queuedBroadcast[i].doBlock);
-			}
+AgentHandler.prototype.stepsCompleted = function() {
+	for (var i=0; i < this.queuedBroadcast.length; i++) {
+		var agents = this.getAdjacentAgents(this.queuedBroadcast[i].agent);
+		for (var j=0; j < agents.length; j++) {
+			agents[j].receiveBroadcast(this.queuedBroadcast[i].doBlock);
 		}
 	}
+	this.queuedBroadcast = [];
 }

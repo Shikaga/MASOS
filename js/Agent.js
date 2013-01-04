@@ -17,13 +17,18 @@ Agent.prototype.receiveBlock = function(doBlock) {
 Agent.prototype.step = function() {
 	if (this.doBlock != null) {
 		this.doBlock.invoke(this);
-		if (this.sprite) {
-			this.sprite.remove();
-		}
-		this.draw();
+		this.repaint();
 	}
+};
+
+Agent.prototype.repaint = function() {
+	if (this.sprite) {
+		this.sprite.remove();
+	}
+	this.draw();
 };
 
 Agent.prototype.receiveBroadcast = function(doBlock) {
 	doBlock.invoke(this);
+	this.repaint();
 };

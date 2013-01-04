@@ -19,8 +19,9 @@
 	<script type="text/javascript" src="js/State.js"></script>
 <script>
 	var sh = new SpriteHandler();
-	var a = new AgentHandler(sh, 200,200,10);
+	var a = new AgentHandler(sh, 100,100,10);
 	a.agents[0].state.color = "green";
+	a.agents[24].state.color = "blue";
 	a.draw();
 
 	var ab = new AndBlock();
@@ -35,13 +36,27 @@
 	dbGreen.changeColor("green");
 	var dbNothing = new DoBlock();
 	dbBroadcast = new DoBlock();
-	dbBroadcast.setBroadcast(dbGreen);
+	dbBroadcast2 = new DoBlock();
+	var ifBlue = new IfBlock();
+	ifBlue.ifColor("blue", dbBlue, dbGreen);
+
+	dbBroadcast.setBroadcast(ifBlue);
+
+
+
+	dbBroadcast2.setBroadcast(dbRed);
 
 	var ibGreen = new IfBlock();
 	var andBlock = new AndBlock();
 	andBlock.and(dbBroadcast, dbGreen);
 
 	ibGreen.ifColor("green", andBlock, dbNothing);
+
+	var ibRed = new IfBlock();
+	var andBlock2 = new AndBlock();
+	andBlock2.and(dbBroadcast2, dbRed);
+
+	ibRed.ifColor("green", andBlock2, dbNothing);
 
 	a.setDoBlock(ibGreen);
 </script>
