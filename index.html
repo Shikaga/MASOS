@@ -15,11 +15,15 @@
     <script type="text/javascript" src="js/AgentHandler.js"></script>
 	<script type="text/javascript" src="js/DoBlock.js"></script>
 	<script type="text/javascript" src="js/IfBlock.js"></script>
+	<script type="text/javascript" src="js/AndBlock.js"></script>
 	<script type="text/javascript" src="js/State.js"></script>
 <script>
 	var sh = new SpriteHandler();
 	var a = new AgentHandler(sh, 200,200,10);
+	a.agents[0].state.color = "green";
 	a.draw();
+
+	var ab = new AndBlock();
 
 	var dbRed = new DoBlock();
 	dbRed.changeColor("red");
@@ -27,16 +31,19 @@
 	dbBlue.changeColor("blue");
 	var dbWhite = new DoBlock();
 	dbWhite.changeColor("white");
+	var dbGreen = new DoBlock();
+	dbGreen.changeColor("green");
+	var dbNothing = new DoBlock();
+	dbBroadcast = new DoBlock();
+	dbBroadcast.setBroadcast(dbGreen);
 
-	var ibWhite = new IfBlock();
-	var ibRed = new IfBlock();
-	var ibBlue = new IfBlock();
+	var ibGreen = new IfBlock();
+	var andBlock = new AndBlock();
+	andBlock.and(dbBroadcast, dbGreen);
 
-	ibWhite.ifColor("white", dbRed, ibRed);
-	ibRed.ifColor("red", dbBlue, ibBlue);
-	ibBlue.ifColor("blue", dbWhite, ibWhite);
+	ibGreen.ifColor("green", andBlock, dbNothing);
 
-	a.setDoBlock(ibWhite);
+	a.setDoBlock(ibGreen);
 </script>
 <button style="margin-top:200px" onclick="a.step()">Step</button>
 		

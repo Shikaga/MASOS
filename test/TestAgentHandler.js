@@ -1,6 +1,7 @@
 module("AgentHandlerTests", {
 	setup: function() {
 		this.mySpriteHandler = { createCircleSprite: function() {} };
+		this.myAgentHandler = { spriteHandler: this.mySpriteHandler };
         this.myDoBlock = { invoke: function() {}};
     }, teardown: function() {
 
@@ -9,7 +10,7 @@ module("AgentHandlerTests", {
 
 test("AgentHandler can create a single agent",
 	function() {
-		var ah = new AgentHandler(this.mySpriteHandler, 10,10,5);
+		var ah = new AgentHandler(this.myAgentHandler, 10,10,5);
 		equal(1, ah.agents.length);
 		equal(5, ah.agents[0].radius);
 		equal(5, ah.agents[0].x);
@@ -18,7 +19,7 @@ test("AgentHandler can create a single agent",
 
 test("AgentHandler can create a two agents",
 	function() {
-		var ah = new AgentHandler(this.mySpriteHandler, 20,10,5);
+		var ah = new AgentHandler(this.myAgentHandler, 20,10,5);
 		equal(2, ah.agents.length);
 		equal(5, ah.agents[0].radius);
 		equal(5, ah.agents[0].x);
@@ -30,7 +31,7 @@ test("AgentHandler can create a two agents",
 
 test("AgentHandler can create a four agents",
 	function() {
-		var ah = new AgentHandler(this.mySpriteHandler, 20,20,5);
+		var ah = new AgentHandler(this.myAgentHandler, 20,20,5);
 		equal(4, ah.agents.length);
 
 		equal(5, ah.agents[0].radius);
@@ -140,10 +141,32 @@ test("AgentHandler can broadcast to adjacent agents", function() {
 	var db = new DoBlock();
 	db.changeColor("red");
 	ah.broadcast(ah.agents[0], db);
-	ah.step();
 
 	equal("white", ah.agents[0].state.color);
 	equal("red", ah.agents[1].state.color);
 	equal("red", ah.agents[2].state.color);
 	equal("white", ah.agents[3].state.color);
+});
+
+test("AgentHandler doesn't handle broadcasts until after a step is complete", function() {
+	var ah = new AgentHandler(this.mySpriteHandler,20,20,5);
+
+	var self = this;
+	this.counter = 0;
+
+	var testDoBlock =  {
+		invoke : function(agent) {
+			self.counter += 1;
+			agent.agentHandler.broadcast(agent, {
+				invoke: function() {
+					equal(4, self.counter);
+				}
+			})
+		}
+	}
+
+	var db = new DoBlock();
+	//db.setBroadcast(testDoBlock);
+	ah.setDoBlock(testDoBlock);
+	ah.step();
 });

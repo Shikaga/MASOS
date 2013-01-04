@@ -1,13 +1,13 @@
-var Agent = function(spriteHandler, x, y, radius) {
+var Agent = function(agentHandler, x, y, radius) {
 	this.x = x;
 	this.y = y;
 	this.radius = radius;
-	this.spriteHandler = spriteHandler;
+	this.agentHandler = agentHandler;
 	this.state = new State(this);
 };
 
 Agent.prototype.draw = function() {
-	this.sprite = this.spriteHandler.createCircleSprite(this.x, this.y, this.radius, this.state.color);
+	this.sprite = this.agentHandler.spriteHandler.createCircleSprite(this.x, this.y, this.radius, this.state.color);
 };
 
 Agent.prototype.receiveBlock = function(doBlock) {
@@ -22,4 +22,8 @@ Agent.prototype.step = function() {
 		}
 		this.draw();
 	}
+};
+
+Agent.prototype.receiveBroadcast = function(doBlock) {
+	doBlock.invoke(this);
 };

@@ -1,10 +1,13 @@
 var AgentHandler = function(sh, width, height, radius) {
+	this.spriteHandler = sh;
 	this.agents = [];
 	for (var i=radius; i < width; i+=radius*2) {
 		for (var j = radius; j < height; j+=radius*2) {
-			this.agents.push(new Agent(sh, i, j,radius));
+			this.agents.push(new Agent(this, i, j,radius));
 		}
 	}
+	this.stepInProgress = false;
+	this.queuedBroadcast = [];
 	//var circle = sh.createCircleSprite(100,100,100);
 	//x = circle;
 }
@@ -24,9 +27,12 @@ AgentHandler.prototype.setDoBlock = function(doBlock) {
 }
 
 AgentHandler.prototype.step = function() {
+	this.stepInProgress = true;
 	for (var i=0; i < this.agents.length; i++) {
 		this.agents[i].step();
 	}
+	this.stepInProgress = false;
+	this.stepsCompleted();
 }
 
 AgentHandler.prototype.getAdjacentAgents = function(agent) {
@@ -48,8 +54,19 @@ AgentHandler.prototype.getAdjacentAgents = function(agent) {
 }
 
 AgentHandler.prototype.broadcast = function(agent, doBlock) {
-	var agents = this.getAdjacentAgents(agent);
-	for (var i=0; i < agents.length; i++) {
-		agents[i].receiveBlock(doBlock);
+	this.queuedBroadcast.push({"agent": agent, "doBlock": doBlock});
+	if (!this.stepInProgress) {
+		this.stepsCompleted();
+	}
+}
+
+AgentHandler.prototype.stepsCompleted = function(agent, doBlock) {
+	if (this.queuedBroadcast != null) {
+		for (var i=0; i < this.queuedBroadcast.length; i++) {
+			var agents = this.getAdjacentAgents(this.queuedBroadcast[i].agent);
+			for (var j=0; j < agents.length; j++) {
+				agents[j].receiveBroadcast(this.queuedBroadcast[i].doBlock);
+			}
+		}
 	}
 }
