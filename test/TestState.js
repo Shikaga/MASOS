@@ -16,5 +16,5 @@ test("State color starts as white", function() {
 
 test("State returns all the fields it has", function() {
 	var state = new State();
-	deepEqual(["color"], state.getFields())
+	deepEqual(["color"], State.getFields())
 });

@@ -3,9 +3,13 @@ var IfBlock = function() {
 
 IfBlock.prototype.invoke = function(agent) {
 	if (agent.state[this.field] == this.value) {
-		this.doBlockIf.invoke(agent);
+		if (this.doBlockIf != null) {
+			this.doBlockIf.invoke(agent);
+		}
 	} else {
-		this.doBlockElse.invoke(agent);
+		if (this.doBlockElse != null ) {
+			this.doBlockElse.invoke(agent);
+		}
 	}
 };
 

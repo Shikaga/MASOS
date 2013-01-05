@@ -9,6 +9,7 @@
 	<body>
 		<div id="testbar"><a class="testbar" href="test/test.html" target="_blank">Run the Tests!</a></div>
 		Hello World!
+		<div style="margin-left: 200px;" id="interface"></div>
 	</body>
 	<script type="text/javascript" src="js/SpriteHandler.js"></script>
 	<script type="text/javascript" src="js/Agent.js"></script>
@@ -19,6 +20,7 @@
 	<script type="text/javascript" src="js/SwitchBlock.js"></script>
 	<script type="text/javascript" src="js/AndBlock.js"></script>
 	<script type="text/javascript" src="js/State.js"></script>
+	<script type="text/javascript" src="js/BlockHandler.js"></script>
 <script>
 	var sh = new SpriteHandler();
 	var a = new AgentHandler(sh, 100,100,10);
@@ -60,7 +62,12 @@
 	});
 
 	a.setDoBlock(switchGreenBcGreenRedBcRed);
+
+	var interfaceElement = document.getElementById("interface");
+	var bh = new BlockHandler(interfaceElement);
+	bh.add("do");
+	bh.render();
 </script>
-<button style="margin-top:200px" onclick="a.step()">Step</button>
+<button style="margin-top:200px" onclick="a.setDoBlock(bh.main);a.step()">Step</button>
 		
 </html>

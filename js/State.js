@@ -3,6 +3,6 @@ var State = function(agent){
 	this.agent = agent;
 };
 
-State.prototype.getFields = function() {
+State.getFields = function() {
 	return ["color"];
 }
