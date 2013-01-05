@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="js/DoBlock.js"></script>
 	<script type="text/javascript" src="js/BroadcastBlock.js"></script>
 	<script type="text/javascript" src="js/IfBlock.js"></script>
+	<script type="text/javascript" src="js/SwitchBlock.js"></script>
 	<script type="text/javascript" src="js/AndBlock.js"></script>
 	<script type="text/javascript" src="js/State.js"></script>
 <script>
@@ -40,25 +41,25 @@
 	//If green broadcast (turn white to green) and (turn blue to red)
 	//If red broadcast turn red
 
-	var ifWhiteTurnToGreenOrIfBlueToRed = new IfBlock();
-	var ifBlueTurnToRed = new IfBlock();
-
-	ifWhiteTurnToGreenOrIfBlueToRed.set("color", "white", dbGreen, ifBlueTurnToRed);
-	ifBlueTurnToRed.set("color", "blue", dbRed, dbNothing);
-
-	var ifGreenBroadcastChangeToGreenElseCheckIfRed = new IfBlock();
-	var ifRedBroadcastChangeToRed = new IfBlock();
+	var switchWhiteGreenBlueRed = new SwitchBlock();
+	switchWhiteGreenBlueRed.set("color", {
+		"white": dbGreen,
+		"blue": dbRed
+	});
 
 	var broadcastChangeWhiteToGreenOrBlueToRed = new BroadcastBlock();
-	broadcastChangeWhiteToGreenOrBlueToRed.setBroadcast(ifWhiteTurnToGreenOrIfBlueToRed);
+	broadcastChangeWhiteToGreenOrBlueToRed.setBroadcast(switchWhiteGreenBlueRed);
 
 	var broadcastChangeToRed = new BroadcastBlock();
 	broadcastChangeToRed.setBroadcast(dbRed);
 
-	ifGreenBroadcastChangeToGreenElseCheckIfRed.set("color", "green", broadcastChangeWhiteToGreenOrBlueToRed, ifRedBroadcastChangeToRed);
-	ifRedBroadcastChangeToRed.set("color", "red", broadcastChangeToRed, dbNothing);
+	var switchGreenBcGreenRedBcRed = new SwitchBlock();
+	switchGreenBcGreenRedBcRed.set("color", {
+		"green": broadcastChangeWhiteToGreenOrBlueToRed,
+		"red": broadcastChangeToRed
+	});
 
-	a.setDoBlock(ifGreenBroadcastChangeToGreenElseCheckIfRed);
+	a.setDoBlock(switchGreenBcGreenRedBcRed);
 </script>
 <button style="margin-top:200px" onclick="a.step()">Step</button>
 		

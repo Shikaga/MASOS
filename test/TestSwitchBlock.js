@@ -26,3 +26,23 @@ test("SwitchBlock invokes DoBlock if color is correct",
 
 		equal("red", agent.state.color);
 	});
+
+
+test("SwitchBlock does nothing if color not matched",
+	function() {
+		var sb = new SwitchBlock();
+		var dbRed = new DoBlock();
+		var dbBlue = new DoBlock();
+
+		dbRed.setField("color", "red");
+		dbBlue.setField("color", "blue");
+		var agent = new Agent(this.mySpriteHandler, 10,10,10);
+
+		sb.set("color", {
+			"red": dbRed,
+			"blue": dbBlue
+		})
+		sb.invoke(agent);
+
+		equal("white", agent.state.color);
+	});
