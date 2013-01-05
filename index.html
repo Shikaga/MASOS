@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="js/Agent.js"></script>
     <script type="text/javascript" src="js/AgentHandler.js"></script>
 	<script type="text/javascript" src="js/DoBlock.js"></script>
+	<script type="text/javascript" src="js/BroadcastBlock.js"></script>
 	<script type="text/javascript" src="js/IfBlock.js"></script>
 	<script type="text/javascript" src="js/AndBlock.js"></script>
 	<script type="text/javascript" src="js/State.js"></script>
@@ -48,10 +49,10 @@
 	var ifGreenBroadcastChangeToGreenElseCheckIfRed = new IfBlock();
 	var ifRedBroadcastChangeToRed = new IfBlock();
 
-	var broadcastChangeWhiteToGreenOrBlueToRed = new DoBlock();
+	var broadcastChangeWhiteToGreenOrBlueToRed = new BroadcastBlock();
 	broadcastChangeWhiteToGreenOrBlueToRed.setBroadcast(ifWhiteTurnToGreenOrIfBlueToRed);
 
-	var broadcastChangeToRed = new DoBlock();
+	var broadcastChangeToRed = new BroadcastBlock();
 	broadcastChangeToRed.setBroadcast(dbRed);
 
 	ifGreenBroadcastChangeToGreenElseCheckIfRed.set("color", "green", broadcastChangeWhiteToGreenOrBlueToRed, ifRedBroadcastChangeToRed);

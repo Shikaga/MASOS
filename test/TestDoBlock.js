@@ -26,7 +26,7 @@ test("DoBlock can broadcast", function() {
 
 	var dbColor = new DoBlock();
 	dbColor.setField("color", "red");
-	var dbBroadcast = new DoBlock();
+	var dbBroadcast = new BroadcastBlock();
 	dbBroadcast.setBroadcast(dbColor);
 
 	var agent = new Agent(this.myAgentHandler, 10,10,10);
