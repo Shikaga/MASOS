@@ -139,7 +139,7 @@ test("AgentHandler can find two adjacent agents and ignores diagonal agent", fun
 test("AgentHandler doesn't broadcast until step", function() {
 	var ah = new AgentHandler(this.mySpriteHandler,20,20,5);
 	var db = new DoBlock();
-	db.changeColor("red");
+	db.setField("color", "red");
 	ah.broadcast(ah.agents[0], db);
 
 	equal("white", ah.agents[0].state.color);
@@ -151,7 +151,7 @@ test("AgentHandler doesn't broadcast until step", function() {
 test("AgentHandler can broadcast to adjacent agents after step", function() {
 	var ah = new AgentHandler(this.mySpriteHandler,20,20,5);
 	var db = new DoBlock();
-	db.changeColor("red");
+	db.setField("color", "red");
 	ah.broadcast(ah.agents[0], db);
 	ah.step();
 

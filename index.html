@@ -27,13 +27,13 @@
 	var ab = new AndBlock();
 
 	var dbRed = new DoBlock();
-	dbRed.changeColor("red");
+	dbRed.setField("color", "red");
 	var dbBlue = new DoBlock();
-	dbBlue.changeColor("blue");
+	dbBlue.setField("color", "blue");
 	var dbWhite = new DoBlock();
-	dbWhite.changeColor("white");
+	dbWhite.setField("color", "white");
 	var dbGreen = new DoBlock();
-	dbGreen.changeColor("green");
+	dbGreen.setField("color", "green");
 	var dbNothing = new DoBlock();
 
 	//If green broadcast (turn white to green) and (turn blue to red)
@@ -42,8 +42,8 @@
 	var ifWhiteTurnToGreenOrIfBlueToRed = new IfBlock();
 	var ifBlueTurnToRed = new IfBlock();
 
-	ifWhiteTurnToGreenOrIfBlueToRed.ifColor("white", dbGreen, ifBlueTurnToRed);
-	ifBlueTurnToRed.ifColor("blue", dbRed, dbNothing);
+	ifWhiteTurnToGreenOrIfBlueToRed.set("color", "white", dbGreen, ifBlueTurnToRed);
+	ifBlueTurnToRed.set("color", "blue", dbRed, dbNothing);
 
 	var ifGreenBroadcastChangeToGreenElseCheckIfRed = new IfBlock();
 	var ifRedBroadcastChangeToRed = new IfBlock();
@@ -54,8 +54,8 @@
 	var broadcastChangeToRed = new DoBlock();
 	broadcastChangeToRed.setBroadcast(dbRed);
 
-	ifGreenBroadcastChangeToGreenElseCheckIfRed.ifColor("green", broadcastChangeWhiteToGreenOrBlueToRed, ifRedBroadcastChangeToRed);
-	ifRedBroadcastChangeToRed.ifColor("red", broadcastChangeToRed, dbNothing);
+	ifGreenBroadcastChangeToGreenElseCheckIfRed.set("color", "green", broadcastChangeWhiteToGreenOrBlueToRed, ifRedBroadcastChangeToRed);
+	ifRedBroadcastChangeToRed.set("color", "red", broadcastChangeToRed, dbNothing);
 
 	a.setDoBlock(ifGreenBroadcastChangeToGreenElseCheckIfRed);
 </script>

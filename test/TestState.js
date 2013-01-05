@@ -11,5 +11,10 @@ module("StateTests", {
 
 test("State color starts as white", function() {
 	var state = new State();
-	equal("white", state.color);
+	equal("white", state["color"]);
+});
+
+test("State returns all the fields it has", function() {
+	var state = new State();
+	deepEqual(["color"], state.getFields())
 });

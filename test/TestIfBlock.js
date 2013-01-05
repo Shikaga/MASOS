@@ -12,13 +12,13 @@ test("IfBlock invokes DoBlock if color is correct",
 	function() {
 		var ib = new IfBlock();
 		var dbRed = new DoBlock();
-		dbRed.changeColor("red");
+		dbRed.setField("color", "red");
 		var dbBlue = new DoBlock();
-		dbBlue.changeColor("blue");
+		dbBlue.setField("color", "blue");
 
 		var agent = new Agent(this.mySpriteHandler, 10,10,10);
 
-		ib.ifColor("white", dbRed, dbBlue);
+		ib.set("color", "white", dbRed, dbBlue);
 		ib.invoke(agent);
 
 		equal("red", agent.state.color);
@@ -28,13 +28,13 @@ test("IfBlock invokes DoBlock if color is wrong",
 	function() {
 		var ib = new IfBlock();
 		var dbRed = new DoBlock();
-		dbRed.changeColor("red");
+		dbRed.setField("color", "red");
 		var dbBlue = new DoBlock();
-		dbBlue.changeColor("blue");
+		dbBlue.setField("color", "blue");
 
 		var agent = new Agent(this.mySpriteHandler, 10,10,10);
 
-		ib.ifColor("red", dbRed, dbBlue);
+		ib.set("color", "red", dbRed, dbBlue);
 		ib.invoke(agent);
 
 		equal("blue", agent.state.color);
@@ -43,19 +43,19 @@ test("IfBlock invokes DoBlock if color is wrong",
 test("IfBlock color rotator",
 	function() {
 		var dbRed = new DoBlock();
-		dbRed.changeColor("red");
+		dbRed.setField("color", "red");
 		var dbBlue = new DoBlock();
-		dbBlue.changeColor("blue");
+		dbBlue.setField("color", "blue");
 		var dbWhite = new DoBlock();
-		dbWhite.changeColor("white");
+		dbWhite.setField("color", "white");
 
 		var ibWhite = new IfBlock();
 		var ibRed = new IfBlock();
 		var ibBlue = new IfBlock();
 
-		ibWhite.ifColor("white", dbRed, ibRed);
-		ibRed.ifColor("red", dbBlue, ibBlue);
-		ibBlue.ifColor("blue", dbWhite, ibWhite);
+		ibWhite.set("color", "white", dbRed, ibRed);
+		ibRed.set("color", "red", dbBlue, ibBlue);
+		ibBlue.set("color", "blue", dbWhite, ibWhite);
 
 		var agent = new Agent(this.mySpriteHandler, 10,10,10);
 

@@ -14,30 +14,18 @@ module("DoBlock Tests", {
 test("DoBlock can change agents color",
 	function() {
 		var db = new DoBlock();
-		db.changeColor("red");
+		db.setField("color", "red");
 		var agent = new Agent(this.mySpriteHandler, 10,10,10);
 		db.invoke(agent);
 		equal("red", agent.state.color);
 	});
-
-test("DoBlock can invoke an IfBlock",
-	function() {
-		var ib = genericIfBlock();
-
-		var db = new DoBlock();
-		db.if(ib);
-
-		var agent = new Agent(this.mySpriteHandler, 10,10,10);
-		db.invoke(agent);
-		equal("red", agent.state.color);
-});
 
 test("DoBlock can broadcast", function() {
 	var mockAgentHandler = this.mock(this.myAgentHandler);
 	mockAgentHandler.expects("broadcast").once();
 
 	var dbColor = new DoBlock();
-	dbColor.changeColor("red");
+	dbColor.setField("color", "red");
 	var dbBroadcast = new DoBlock();
 	dbBroadcast.setBroadcast(dbColor);
 
@@ -51,10 +39,10 @@ test("DoBlock can broadcast", function() {
 function genericIfBlock() {
 	var ib = new IfBlock();
 	var dbRed = new DoBlock();
-	dbRed.changeColor("red");
+	dbRed.setField("color", "red");
 	var dbBlue = new DoBlock();
-	dbBlue.changeColor("blue");
-	ib.ifColor("white", dbRed, dbBlue);
+	dbBlue.setField("color", "blue");
+	ib.set("color", "white", dbRed, dbBlue);
 	return ib;
 }
 
