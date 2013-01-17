@@ -154,25 +154,6 @@ BlockHandler.prototype.getBlockFromName = function(name) {
 	}
 }
 
-BlockHandler.prototype.getColorSelect = function() {
-	var selectElement = document.createElement("select");
-	var fields = ["red", "white", "blue", "green"];
-	for (var i=0; i < fields.length; i++) {
-		selectElement.options[i] = new Option(fields[i], fields[i])
-	}
-	return selectElement;
-}
-
-BlockHandler.prototype.getDoFieldSelector = function() {
-	var selectElement = document.createElement("select");
-	var fields = State.getFields();
-	for (var i=0; i < fields.length; i++) {
-		selectElement.options[i] = new Option(fields[i], fields[i])
-	}
-	return selectElement;
-
-}
-
 BlockHandler.prototype.renderDoGenerator = function() {
 	var renderSpan = document.createElement("div");
 	var selectElement = this.getDoFieldSelector();
