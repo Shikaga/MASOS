@@ -1,15 +1,18 @@
 var AgentHandler = function(sh, width, height, radius) {
 	this.spriteHandler = sh;
-	this.agents = [];
-	for (var i=radius; i < width; i+=radius*2) {
-		for (var j = radius; j < height; j+=radius*2) {
-			this.agents.push(new Agent(this, i, j,radius));
-		}
-	}
+	this.agents = this.populateAgentsInArea(width, height, radius);
 	this.stepInProgress = false;
 	this.queuedBroadcast = [];
-	//var circle = sh.createCircleSprite(100,100,100);
-	//x = circle;
+}
+
+AgentHandler.prototype.populateAgentsInArea = function(width, height, radius) {
+	var agents = [];
+	for (var i=radius; i < width; i+=radius*2) {
+		for (var j = radius; j < height; j+=radius*2) {
+			agents.push(new Agent(this, i, j,radius));
+		}
+	}
+	return agents;
 }
 
 AgentHandler.prototype.draw = function() {
